@@ -1,28 +1,57 @@
 <template>
-  <div class="hello">
-    <h1><a href="" target="_blank" rel="noopener">{{ msg }}</a></h1>
-    <p>
-      All in one tool to organize ...
-    </p>
-    <h3>#organization</h3>
+  <div class="card">
+    <div class="card-content">
+      <div class="content">
+        <nav class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <a :href="link" target="_blank" rel="noopener">{{ title }}</a>
+            </div>
+          </div>
+          <div class="level-right">
+            <div class="level-item"><a class="button is-danger is-inverted">x remove</a></div>
+          </div>
+        </nav>
+        <p>
+          {{ content }}
+        </p>
+        <p>
+          <b-taglist>
+            <b-tag v-for="tag in tags" :key="tag" type="is-info">
+              #{{ tag }}
+            </b-tag>
+          </b-taglist>
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
   props: {
-    msg: String,
+    title: {
+      type: String,
+      required: true,
+    },
+    link: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    tags: {
+      type: Array,
+      required: true,
+    },
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-a {
-  color: #42b983;
+.card {
+  margin-bottom: 20px;
 }
 </style>
