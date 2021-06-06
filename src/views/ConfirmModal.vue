@@ -2,7 +2,9 @@
   <form action="">
     <div class="modal-card" style="width: auto">
       <header class="modal-card-head">
-        <p class="modal-card-title">x Remove tool</p>
+        <p class="modal-card-title">
+          <b-icon pack="fas" icon="times" />Remove tool
+        </p>
       </header>
       <section class="modal-card-body">
         <div class="content">Are you sure you want to remove tool?</div>

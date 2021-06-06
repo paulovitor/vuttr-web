@@ -27,7 +27,7 @@
         </div>
         <div class="level-right">
           <p class="level-item">
-            <a class="button is-success" @click="openNewModal()">+ Add</a>
+            <b-button icon-left="plus" @click="openNewModal()">Add</b-button>
           </p>
         </div>
       </nav>

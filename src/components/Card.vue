@@ -12,9 +12,13 @@
           </div>
           <div class="level-right">
             <div class="level-item">
-              <a class="button is-danger is-inverted" @click="remove(tool)">
-                x remove
-              </a>
+              <b-button
+                class="is-danger is-inverted"
+                icon-left="times"
+                @click="remove(tool)"
+              >
+                remove
+              </b-button>
             </div>
           </div>
         </nav>
@@ -23,9 +27,7 @@
         </p>
         <p>
           <b-taglist>
-            <b-tag v-for="tag in tool.tags" :key="tag" type="is-info">
-              #{{ tag }}
-            </b-tag>
+            <b-tag v-for="tag in tool.tags" :key="tag">#{{ tag }}</b-tag>
           </b-taglist>
         </p>
       </div>
