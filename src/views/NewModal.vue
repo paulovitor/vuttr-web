@@ -3,7 +3,7 @@
     <div class="modal-card" style="width: auto">
       <header class="modal-card-head">
         <p class="modal-card-title">
-          <b-icon pack="fas" icon="times" />Add new tool
+          <b-icon pack="fas" icon="plus" /> Add new tool
         </p>
       </header>
       <section class="modal-card-body">

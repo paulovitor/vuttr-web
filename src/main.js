@@ -7,6 +7,7 @@ import "buefy/dist/buefy.css";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+  faExclamationCircle,
   faPlus,
   faSearch,
   faTag,
@@ -14,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faPlus, faSearch, faTag, faTimes);
+library.add(faExclamationCircle, faPlus, faSearch, faTag, faTimes);
 Vue.component("vue-fontawesome", FontAwesomeIcon);
 
 Vue.config.productionTip = false;

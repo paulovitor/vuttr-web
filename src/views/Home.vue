@@ -43,7 +43,6 @@
 
 <script>
 import Card from "@/components/Card.vue";
-import ConfirmModal from "./ConfirmModal.vue";
 import NewModal from "./NewModal.vue";
 import { mapActions, mapGetters, mapState } from "vuex";
 
@@ -74,7 +73,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(["removeTool"]),
+    ...mapActions(["addTool", "removeTool"]),
     searchByQuery() {
       if (this.query) {
         this.list = this.onlyTags
@@ -90,25 +89,18 @@ export default {
         trapFocus: true,
         events: {
           "add-tool": (tool) => {
-            this.$store.dispatch("addTool", tool);
+            this.addTool(tool);
           },
         },
       });
     },
     openConfirmModal(tool) {
-      this.$buefy.modal.open({
-        parent: this,
-        component: ConfirmModal,
-        props: {
-          tool,
-        },
-        hasModalCard: true,
-        trapFocus: true,
-        events: {
-          "remove-tool": (tool) => {
-            this.$store.dispatch("removeTool", tool);
-          },
-        },
+      this.$buefy.dialog.confirm({
+        title: "x Remove tool",
+        message: "Are you sure you want to remove tool?",
+        confirmText: "Yes, remove",
+        type: "is-danger",
+        onConfirm: () => this.removeTool(tool),
       });
     },
   },
