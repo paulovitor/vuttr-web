@@ -7,26 +7,35 @@
         <div class="level-left">
           <div class="level-item">
             <b-field>
-              <b-input placeholder="search"></b-input>
+              <b-input
+                v-model="query"
+                placeholder="search"
+                icon-pack="fas"
+                icon="search"
+                @input="searchByQuery"
+              >
+              </b-input>
             </b-field>
           </div>
           <div class="level-item">
             <b-field>
-              <b-checkbox>Search in tags only</b-checkbox>
+              <b-checkbox v-model="onlyTags" @input="searchByQuery">
+                Search in tags only
+              </b-checkbox>
             </b-field>
           </div>
         </div>
         <div class="level-right">
-          <p class="level-item"><a class="button is-success">+ Add</a></p>
+          <p class="level-item">
+            <a class="button is-success" @click="openNewModal()">+ Add</a>
+          </p>
         </div>
       </nav>
       <Card
-        v-for="tool in tools"
+        v-for="tool in list"
+        :tool="tool"
         :key="tool.id"
-        :title="tool.title"
-        :link="tool.link"
-        :content="tool.description"
-        :tags="tool.tags"
+        v-on:delete-tool="openConfirmModal"
       />
     </section>
   </div>
@@ -34,6 +43,9 @@
 
 <script>
 import Card from "@/components/Card.vue";
+import ConfirmModal from "./ConfirmModal.vue";
+import NewModal from "./NewModal.vue";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
   name: "Home",
@@ -42,31 +54,63 @@ export default {
   },
   data() {
     return {
-      tools: [
-        {
-          id: 1,
-          title: "Notion",
-          link: "https://notion.so",
-          description:
-            "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. ",
-          tags: [
-            "organization",
-            "planning",
-            "collaboration",
-            "writing",
-            "calendar",
-          ],
-        },
-        {
-          id: 2,
-          title: "json-server",
-          link: "https://github.com/typicode/json-server",
-          description:
-            "Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges.",
-          tags: ["api", "json", "schema", "node", "github", "rest"],
-        },
-      ],
+      query: "",
+      onlyTags: false,
+      list: [],
     };
+  },
+  computed: {
+    ...mapGetters(["getToolsByQuery", "getToolsByTags"]),
+    ...mapState(["tools"]),
+  },
+  watch: {
+    tools: function (val) {
+      this.list = val;
+    },
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      this.list = this.tools;
+    });
+  },
+  methods: {
+    ...mapActions(["removeTool"]),
+    searchByQuery() {
+      if (this.query) {
+        this.list = this.onlyTags
+          ? this.getToolsByTags(this.query)
+          : this.getToolsByQuery(this.query);
+      }
+    },
+    openNewModal() {
+      this.$buefy.modal.open({
+        parent: this,
+        component: NewModal,
+        hasModalCard: true,
+        trapFocus: true,
+        events: {
+          "add-tool": (tool) => {
+            this.$store.dispatch("addTool", tool);
+          },
+        },
+      });
+    },
+    openConfirmModal(tool) {
+      this.$buefy.modal.open({
+        parent: this,
+        component: ConfirmModal,
+        props: {
+          tool,
+        },
+        hasModalCard: true,
+        trapFocus: true,
+        events: {
+          "remove-tool": (tool) => {
+            this.$store.dispatch("removeTool", tool);
+          },
+        },
+      });
+    },
   },
 };
 </script>

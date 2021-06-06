@@ -5,19 +5,25 @@
         <nav class="level">
           <div class="level-left">
             <div class="level-item">
-              <a :href="link" target="_blank" rel="noopener">{{ title }}</a>
+              <a :href="tool.link" target="_blank" rel="noopener">
+                {{ tool.title }}
+              </a>
             </div>
           </div>
           <div class="level-right">
-            <div class="level-item"><a class="button is-danger is-inverted">x remove</a></div>
+            <div class="level-item">
+              <a class="button is-danger is-inverted" @click="remove(tool)">
+                x remove
+              </a>
+            </div>
           </div>
         </nav>
         <p>
-          {{ content }}
+          {{ tool.description }}
         </p>
         <p>
           <b-taglist>
-            <b-tag v-for="tag in tags" :key="tag" type="is-info">
+            <b-tag v-for="tag in tool.tags" :key="tag" type="is-info">
               #{{ tag }}
             </b-tag>
           </b-taglist>
@@ -30,21 +36,14 @@
 <script>
 export default {
   props: {
-    title: {
-      type: String,
+    tool: {
+      type: Object,
       required: true,
     },
-    link: {
-      type: String,
-      required: true,
-    },
-    content: {
-      type: String,
-      required: true,
-    },
-    tags: {
-      type: Array,
-      required: true,
+  },
+  methods: {
+    remove(tool) {
+      this.$emit("delete-tool", tool);
     },
   },
 };
