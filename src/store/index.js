@@ -1,35 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { ADD_TOOL, REMOVE_TOOL } from "./mutation-types";
+import { ADD_TOOL, REMOVE_TOOL, SET_TOOLS } from "./mutation-types";
+import service from "@/api/tools.service.js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    tools: [
-      {
-        id: 1,
-        title: "Notion",
-        link: "https://notion.so",
-        description:
-          "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. ",
-        tags: [
-          "organization",
-          "planning",
-          "collaboration",
-          "writing",
-          "calendar",
-        ],
-      },
-      {
-        id: 2,
-        title: "json-server",
-        link: "https://github.com/typicode/json-server",
-        description:
-          "Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges.",
-        tags: ["api", "json", "schema", "node", "github", "rest"],
-      },
-    ],
+    tools: [],
   },
   mutations: {
     [ADD_TOOL](state, tool) {
@@ -38,13 +16,37 @@ export default new Vuex.Store({
     [REMOVE_TOOL](state, tool) {
       state.tools.splice(state.tools.indexOf(tool), 1);
     },
+    [SET_TOOLS](state, tools) {
+      state.tools = tools;
+    },
   },
   actions: {
-    addTool({ commit }, tool) {
-      commit(ADD_TOOL, tool);
+    addTool: async ({ commit }, tool) => {
+      try {
+        const { data } = await service.create(tool);
+        commit(ADD_TOOL, data);
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
     },
-    removeTool({ commit }, tool) {
-      commit(REMOVE_TOOL, tool);
+    getAll: async ({ commit }) => {
+      try {
+        const { data } = await service.getAll();
+        commit(SET_TOOLS, data);
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    },
+    removeTool: async ({ commit }, tool) => {
+      try {
+        await service.delete(tool.id);
+        commit(REMOVE_TOOL, tool);
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
     },
   },
   modules: {},

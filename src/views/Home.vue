@@ -67,13 +67,11 @@ export default {
       this.list = val;
     },
   },
-  mounted: function () {
-    this.$nextTick(function () {
-      this.list = this.tools;
-    });
+  mounted() {
+    this.getAll();
   },
   methods: {
-    ...mapActions(["addTool", "removeTool"]),
+    ...mapActions(["addTool", "removeTool", "getAll"]),
     searchByQuery() {
       if (this.query) {
         this.list = this.onlyTags
