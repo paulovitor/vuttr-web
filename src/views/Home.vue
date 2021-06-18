@@ -86,9 +86,7 @@ export default {
         hasModalCard: true,
         trapFocus: true,
         events: {
-          "add-tool": (tool) => {
-            this.addTool(tool);
-          },
+          "add-tool": (tool) => this.addTool(tool),
         },
       });
     },
