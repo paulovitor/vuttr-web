@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
+import { Auth0Plugin } from "./auth";
 import store from "./store";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
@@ -15,10 +16,24 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faExclamationCircle, faPlus, faSearch, faTag, faTimes);
-Vue.component("vue-fontawesome", FontAwesomeIcon);
+import { domain, clientId } from "../auth_config.json";
 
 Vue.config.productionTip = false;
+
+Vue.use(Auth0Plugin, {
+  domain,
+  clientId,
+  onRedirectCallback: (appState) => {
+    router.push(
+      appState && appState.targetUrl
+        ? appState.targetUrl
+        : window.location.pathname
+    );
+  },
+});
+
+library.add(faExclamationCircle, faPlus, faSearch, faTag, faTimes);
+Vue.component("vue-fontawesome", FontAwesomeIcon);
 
 Vue.use(Buefy, {
   defaultIconComponent: "vue-fontawesome",

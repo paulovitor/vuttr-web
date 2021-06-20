@@ -1,17 +1,23 @@
 import axios from "axios";
+import { getInstance } from "../auth/authWrapper";
 
 const http = axios.create({
   baseURL: process.env.VUE_APP_API_ENDPOINT,
 });
 
-http.interceptors.request.use((config) => {
-  config.headers["Authorization"] = `Bearer ${getToken()}`;
+http.interceptors.request.use(async (config) => {
+  const authService = getInstance();
+
+  const token = await authService.getTokenSilently({
+    audience: process.env.VUE_APP_AUTH0_AUDIENCE,
+    scope: "create:tools delete:tools",
+  });
+
+  console.log(token);
+
+  config.headers["Authorization"] = `Bearer ${token}`;
   return config;
 });
-
-function getToken() {
-  return "";
-}
 
 const RESOURCE_NAME = "/tools";
 
