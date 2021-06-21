@@ -15,7 +15,7 @@
               <b-button
                 class="is-danger is-inverted"
                 icon-left="times"
-                @click="remove(tool)"
+                @click="remove()"
               >
                 remove
               </b-button>
@@ -44,8 +44,8 @@ export default {
     },
   },
   methods: {
-    remove(tool) {
-      this.$emit("delete-tool", tool);
+    remove() {
+      this.$emit("delete-tool", this.tool);
     },
   },
 };
