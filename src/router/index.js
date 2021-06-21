@@ -12,7 +12,7 @@ const routes = [
     component: Home,
     beforeEnter: authGuard,
     meta: {
-      roles: ["create:tools"],
+      roles: ["create:tools", "delete:tools"],
     },
   },
 ];

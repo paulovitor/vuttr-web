@@ -13,8 +13,6 @@ http.interceptors.request.use(async (config) => {
     scope: "create:tools delete:tools",
   });
 
-  console.log(token);
-
   config.headers["Authorization"] = `Bearer ${token}`;
   return config;
 });

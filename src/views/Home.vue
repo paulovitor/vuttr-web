@@ -1,7 +1,21 @@
 <template>
   <div class="container is-max-desktop">
     <section class="section">
-      <h1 class="title">VUTTR</h1>
+      <b-navbar>
+        <template #start>
+          <h1 class="title">VUTTR</h1>
+        </template>
+        <template #end>
+          <b-button
+            v-if="$auth.isAuthenticated && !$auth.loading"
+            type="is-danger"
+            outlined
+            @click="logout()"
+          >
+            Logout
+          </b-button>
+        </template>
+      </b-navbar>
       <h2 class="subtitle">Very Useful Tools to Remember</h2>
       <nav class="level">
         <div class="level-left">
@@ -98,6 +112,9 @@ export default {
         type: "is-danger",
         onConfirm: () => this.removeTool(tool),
       });
+    },
+    logout() {
+      this.$auth.logout();
     },
   },
 };

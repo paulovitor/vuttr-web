@@ -5,7 +5,6 @@ export const authGuard = (to, from, next) => {
 
   const fn = () => {
     if (authService.isAuthenticated) {
-      // authService.logout();
       return next();
     }
     authService.loginWithRedirect({
