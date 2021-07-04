@@ -1,6 +1,6 @@
 import { createLocalVue, shallowMount } from "@vue/test-utils";
 import Card from "@/components/Card.vue";
-import Buefy from "buefy"
+import Buefy from "buefy";
 
 const localVue = createLocalVue()
 localVue.use(Buefy);
