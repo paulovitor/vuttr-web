@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+
+  vuttr-web:
+    container_name: vuttr-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:80'
