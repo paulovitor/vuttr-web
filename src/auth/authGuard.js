@@ -8,7 +8,7 @@ export const authGuard = (to, from, next) => {
       return next();
     }
     authService.loginWithRedirect({
-      redirect_uri: "https://paulovitor.github.io/vuttr-web/",
+      redirect_uri: "https://paulovitor.github.io/",
       appState: { targetUrl: to.fullPath },
       audience: process.env.VUE_APP_AUTH0_AUDIENCE,
       scope: "create:tools delete:tools",
