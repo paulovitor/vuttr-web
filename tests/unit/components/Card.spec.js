@@ -2,7 +2,7 @@ import { createLocalVue, shallowMount } from "@vue/test-utils";
 import Card from "@/components/Card.vue";
 import Buefy from "buefy";
 
-const localVue = createLocalVue()
+const localVue = createLocalVue();
 localVue.use(Buefy);
 
 const tool = {
@@ -18,14 +18,11 @@ const wrapper = shallowMount(Card, {
 });
 
 describe("Card.vue", () => {
-
   it("should define tool props", () => {
-
     expect(wrapper.vm.tool).toBe(tool);
   });
 
   it("should has rendered link element", () => {
-
     const link = wrapper.find("a");
     expect(link.exists()).toBe(true);
     expect(link.element.attributes["href"].value).toBe("tool-link");
@@ -33,7 +30,6 @@ describe("Card.vue", () => {
   });
 
   it("remove should emit delete-tool event", () => {
-
     wrapper.vm.remove();
 
     const payload = wrapper.emitted("delete-tool");

@@ -4,67 +4,64 @@ import Buefy from "buefy";
 import Vuex from "vuex";
 
 describe("Home.vue", () => {
+  let actions;
+  let getters;
+  let wrapper;
 
-    let actions;
-    let getters;
-    let wrapper;
+  beforeEach(() => {
+    const localVue = createLocalVue();
+    localVue.use(Buefy);
+    localVue.use(Vuex);
 
-    beforeEach(() => {
+    actions = {
+      addTool: jest.fn(),
+      removeTool: jest.fn(),
+      getAll: jest.fn(),
+    };
 
-        const localVue = createLocalVue();
-        localVue.use(Buefy);
-        localVue.use(Vuex);
+    getters = {
+      getToolsByQuery: jest.fn(),
+      getToolsByTags: jest.fn(),
+    };
 
-        actions = {
-            addTool: jest.fn(),
-            removeTool: jest.fn(),
-            getAll: jest.fn(),
-        };
-        
-        getters = {
-            getToolsByQuery: jest.fn(),
-            getToolsByTags: jest.fn(),
-        };
-        
-        const store = new Vuex.Store({
-            state: {
-                tools: [],
-            },
-            actions,
-            getters,
-        });
-
-        wrapper = shallowMount(Home, {
-            store,
-            localVue,
-        });
+    const store = new Vuex.Store({
+      state: {
+        tools: [],
+      },
+      actions,
+      getters,
     });
 
-    it("should define vue instance", () => {
-
-        expect(wrapper.isVueInstance()).toBe(true);
-
-        expect(actions.getAll).toHaveBeenCalled();
+    wrapper = shallowMount(Home, {
+      store,
+      localVue,
     });
+  });
 
-    // it("searchByQuery should dispatches action", async() => {
+  it("should define vue instance", () => {
+    expect(wrapper.vm).toBeTruthy();
 
-        // const input = wrapper.find({ name: 'BInput' });
+    expect(actions.getAll).toHaveBeenCalled();
+  });
 
-        // jest.spyOn(wrapper.vm, 'input');
-        // jest.runAllTimers();
+  // it("searchByQuery should dispatches action", async() => {
 
-        // expect(input.exists()).toBe(true);
+  // const input = wrapper.find({ name: 'BInput' });
 
-        // input.element.value = "input";
-        // input.trigger("input");
+  // jest.spyOn(wrapper.vm, 'input');
+  // jest.runAllTimers();
 
-        // expect(wrapper.emitted().input).toBeTruthy();
+  // expect(input.exists()).toBe(true);
 
-        // wrapper.setData({ query: "teste" });
+  // input.element.value = "input";
+  // input.trigger("input");
 
-        // wrapper.vm.searchByQuery();
+  // expect(wrapper.emitted().input).toBeTruthy();
 
-        // expect(getters.getToolsByQuery).toHaveBeenCalled();
-    // });
+  // wrapper.setData({ query: "teste" });
+
+  // wrapper.vm.searchByQuery();
+
+  // expect(getters.getToolsByQuery).toHaveBeenCalled();
+  // });
 });

@@ -7,6 +7,12 @@
         </p>
       </header>
       <section class="modal-card-body">
+        <b-message v-if="errors.length" type="is-danger">
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="error in errors" :key="error">{{ error }}</li>
+          </ul>
+        </b-message>
         <b-field label="Tool Name">
           <b-input v-model="tool.title" required></b-input>
         </b-field>
@@ -45,13 +51,34 @@
 export default {
   data() {
     return {
+      errors: [],
       tool: {},
     };
   },
   methods: {
     add() {
+      this.errors = [];
+
+      if (!this.tool.title) {
+        this.errors.push("Name is required");
+      }
+      if (!this.tool.link) {
+        this.errors.push("Link is required");
+      }
+      if (!this.tool.description) {
+        this.errors.push("Description is required");
+      }
+      if (!this.tool.tags || this.tool.tags.length == 0) {
+        this.errors.push("Tags is required");
+      }
+
+      if (this.errors.length > 0) {
+        return false;
+      }
+
       this.$emit("add-tool", this.tool);
       this.$emit("close");
+      return true;
     },
   },
 };
