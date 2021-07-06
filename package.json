@@ -6,8 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint",
-    "deploy": "sh deploy.sh"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.15.0",
